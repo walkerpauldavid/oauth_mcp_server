@@ -1,0 +1,12 @@
+# Model Context Protocol Dependencies
+fastmcp>=0.2.0
+mcp>=1.0.0
+
+# Environment and Configuration
+python-dotenv>=1.0.0
+
+# HTTP and API (if needed)
+httpx>=0.27.0
+aiohttp>=3.9.0
+
+# Add your specific dependencies here
