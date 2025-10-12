@@ -1,0 +1,5 @@
+{
+  "status": "error",
+  "message": "'charmap' codec can't encode character '\\U0001f510' in position 2: character maps to <undefined>",
+  "error_type": "UnicodeEncodeError"
+}
