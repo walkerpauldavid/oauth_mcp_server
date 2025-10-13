@@ -51,6 +51,10 @@ logger.info(f"Logging initialized. Writing logs to: {os.path.abspath(LOG_FILE)}"
 # Initialize FastMCP server
 mcp = FastMCP("OAuth MCP Server")
 
+# Register MCP Prompts for workflow guidance
+from prompts import register_prompts
+register_prompts(mcp)
+
 @mcp.tool()
 def ping() -> str:
     """Health check endpoint to verify the server is running."""
