@@ -173,4 +173,4 @@ Check the log file: oauth_mcp_server.log
 Enable debug logging: Set LOG_LEVEL=DEBUG in .env
 """
 
-    print("✅ Registered 3 MCP prompts: device_code_auth_workflow, client_credentials_auth_workflow, troubleshooting_auth")
+    print("Registered 3 MCP prompts: device_code_auth_workflow, client_credentials_auth_workflow, troubleshooting_auth")
