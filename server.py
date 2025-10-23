@@ -208,8 +208,8 @@ async def get_cached_token(scope: str = None) -> Dict[str, Any]:
     Get a cached token or fetch a new one if expired.
 
     Uses AUTH_METHOD environment variable to determine authentication flow:
-    - CLIENT_CREDENTIALS: OAuth 2.0 Client Credentials flow (default)
-    - DEVICE_CODE: User delegated token (bearer_token parameter required)
+    - DEVICE_CODE: User delegated token via OAuth 2.0 Device Flow (default)
+    - CLIENT_CREDENTIALS: OAuth 2.0 Client Credentials flow for app-only auth
 
     Args:
         scope: OAuth2 scope for the token
@@ -222,8 +222,8 @@ async def get_cached_token(scope: str = None) -> Dict[str, Any]:
     """
     global _cached_token
 
-    # Get authentication method from environment
-    auth_method = os.getenv("AUTH_METHOD", "CLIENT_CREDENTIALS").upper()
+    # Get authentication method from environment (default to DEVICE_CODE for user-delegated auth)
+    auth_method = os.getenv("AUTH_METHOD", "DEVICE_CODE").upper()
 
     # Use environment variable scope if none provided
     if scope is None:
@@ -268,7 +268,7 @@ async def get_cached_token(scope: str = None) -> Dict[str, Any]:
 @mcp.tool()
 def get_server_info() -> str:
     """Get information about the OAuth MCP Server."""
-    auth_method = os.getenv("AUTH_METHOD", "CLIENT_CREDENTIALS").upper()
+    auth_method = os.getenv("AUTH_METHOD", "DEVICE_CODE").upper()
     info = {
         "name": "OAuth MCP Server",
         "version": "1.0.0",
@@ -687,7 +687,7 @@ async def get_azure_token_info(scope: str = None) -> str:
         token_data = await get_cached_token(scope)
 
         # Get authentication method
-        auth_method = os.getenv("AUTH_METHOD", "CLIENT_CREDENTIALS").upper()
+        auth_method = os.getenv("AUTH_METHOD", "DEVICE_CODE").upper()
 
         # Prepare response data (excluding sensitive information)
         info = {
@@ -753,7 +753,7 @@ async def check_auth_config() -> str:
         JSON string with authentication configuration details
     """
     try:
-        auth_method = os.getenv("AUTH_METHOD", "CLIENT_CREDENTIALS").upper()
+        auth_method = os.getenv("AUTH_METHOD", "DEVICE_CODE").upper()
 
         config = {
             "auth_method": auth_method,
@@ -853,7 +853,7 @@ async def check_auth_config() -> str:
 
 if __name__ == "__main__":
     # Run the server
-    auth_method = os.getenv("AUTH_METHOD", "CLIENT_CREDENTIALS").upper()
+    auth_method = os.getenv("AUTH_METHOD", "DEVICE_CODE").upper()
     logger.info("=" * 80)
     logger.info("Starting OAuth MCP Server...")
     logger.info(f"Authentication Method: {auth_method}")
